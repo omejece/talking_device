@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('node-app:server');
+var http = require('http');
+var https = require('https');
+const fs = require('fs');
+
+
+/*var options = {
+  key: fs.readFileSync('/home/powermonitorlive/ssl/keys/b9fd0_1d117_28075ab9b08e2d5540b84d518839666a.key','utf8'),
+  cert: fs.readFileSync('/home/powermonitorlive/ssl/certs/talkingdevice_powermonitorlive_com_b9fd0_1d117_1690761599_d4f15783a4431667b69c44d4cbc4241d.crt','utf8')
+};*/
+
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+//var port = normalizePort(process.env.PORT || '7000');
+//app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+//var server2 = http.createServer(app,options);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(7000);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/*server2.listen(7100);
+server2.on('error', onError);
+server2.on('listening', onListening);
+*/
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
