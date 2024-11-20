@@ -136,10 +136,6 @@ var server = net.createServer(function(connection) {
 
 
 
-server.listen({
-	host: "18.175.229.83",
-    //host: "127.0.0.1",
-	port: 5500
-}, function() { 
+server.listen(5500, function() { 
    console.log('server is listening to %j', server.address().port);
 });
